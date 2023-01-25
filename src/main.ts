@@ -31,17 +31,25 @@ export async function run(): Promise<void> {
     const text =
       "This is a test \n\r in case of special char ' \" qualcosa ' succederà ééé % \\ ";
 
-    core.debug(
-      `text: ${text
+    // core.debug(
+    //   `text: ${text
+    //     .trim()
+    //     .replace(/(\r\n|\n|\r)/gm, "")
+    //     .replace(/'/g, "\\'")
+    //     .replace(/"/g, '\\"')
+    //     .replace(/`/g, "\\`")}`
+    // );
+
+    // The output of this action is the body of the tweet
+    core.setOutput(
+      "text",
+      text
         .trim()
         .replace(/(\r\n|\n|\r)/gm, "")
         .replace(/'/g, "\\'")
         .replace(/"/g, '\\"')
-        .replace(/`/g, "\\`")}`
+        .replace(/`/g, "\\`")
     );
-
-    // The output of this action is the body of the tweet
-    // core.setOutput("text", text);
   } catch (error) {
     if (error instanceof Error) {
       core.setFailed(error.message);
