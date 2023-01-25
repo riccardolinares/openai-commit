@@ -29,7 +29,7 @@ jobs:
           fi
 
       - name: OpenAI Prompt
-        uses: riccardolinares/openai-commit-tweet@main
+        uses: riccardolinares/openai-commit@main
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
           openai-prompt: "Write a funny and explanatory tweet about this git commit: ${{ github.event.head_commit.message }}"
