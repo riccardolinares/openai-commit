@@ -26,7 +26,7 @@ export async function run(): Promise<void> {
     // core.debug(`openai-response: ${text}`);
 
     // The output of this action is the body of the tweet
-    core.setOutput("text", text);
+    core.setOutput("text", `${text}`);
   } catch (error) {
     if (error instanceof Error) {
       core.setFailed(error.message);
