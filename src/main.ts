@@ -23,10 +23,14 @@ export async function run(): Promise<void> {
     });
     const text = response.data.choices[0].text ?? "";
 
+	// Escape the text to avoid breaking the YAML
+	core.debug(`text: ${text.replace(/[\n\r]/g, "\\n").replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/`/g, "\\`").replace(/\\/g, "\\\\").replace(/%/g, "\\%")}`);
+
+
     // core.debug(`openai-response: ${text}`);
 
     // The output of this action is the body of the tweet
-    core.setOutput('text', text);
+    // core.setOutput('text', text);
   } catch (error) {
     if (error instanceof Error) {
       core.setFailed(error.message);
