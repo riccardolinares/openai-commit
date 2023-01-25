@@ -1,5 +1,5 @@
 name: "OpenAI Prompt"
-description: "Uses OpenAI to generate a prompt response"
+description: "Use OpenAI to generate responses"
 author: riccardolinares
 branding:
   icon: check-square
