@@ -23,7 +23,7 @@ export async function run(): Promise<string> {
     });
     const body = response.data.choices[0].text ?? "";
 
-    console.log(body);
+	core.debug(`openai-response: ${body}`);
 
     return body;
   } catch (error) {
