@@ -10598,6 +10598,21 @@ exports["default"] = _default;
 
 /***/ }),
 
+/***/ 5713:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.parseCommit = void 0;
+function parseCommit(commit) {
+    return commit.trim().replace(/#twito/g, "");
+}
+exports.parseCommit = parseCommit;
+
+
+/***/ }),
+
 /***/ 399:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -10630,6 +10645,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.run = void 0;
 const openai_1 = __nccwpck_require__(9211);
 const core = __importStar(__nccwpck_require__(2186));
+const commits_1 = __nccwpck_require__(5713);
 async function run() {
     try {
         const apiKey = core.getInput("openai-api-key");
@@ -10638,29 +10654,17 @@ async function run() {
         });
         const openai = new openai_1.OpenAIApi(configuration);
         core.debug(`openai-prompt: ${core.getInput("openai-prompt")}`);
-        // const response = await openai.createCompletion({
-        //   model: core.getInput("model"),
-        //   prompt: parseCommit(core.getInput("openai-prompt")),
-        //   temperature: 0.7,
-        //   max_tokens: 256,
-        //   top_p: 1,
-        //   frequency_penalty: 0,
-        //   presence_penalty: 0,
-        // });
-        // const text = response.data.choices[0].text ?? "";
-        // Escape the text to avoid breaking the YAML
-        // core.debug(`text: ${text.trim().replace(/(\r\n|\n|\r)/gm,"").replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/`/g, "\\`")}`);
-        // core.debug(`openai-response: ${text}`);
-        const text = "This is a test \n\r in case of special char '  qualcosa ' succederà ééé % ";
-        // core.debug(
-        //   `text: ${text
-        //     .trim()
-        //     .replace(/(\r\n|\n|\r)/gm, "")
-        //     .replace(/'/g, "\\'")
-        //     .replace(/"/g, '\\"')
-        //     .replace(/`/g, "\\`")}`
-        // );
-        // The output of this action is the body of the tweet
+        const response = await openai.createCompletion({
+            model: core.getInput("model"),
+            prompt: (0, commits_1.parseCommit)(core.getInput("openai-prompt")),
+            temperature: 0.7,
+            max_tokens: 256,
+            top_p: 1,
+            frequency_penalty: 0,
+            presence_penalty: 0,
+        });
+        const text = response.data.choices[0].text ?? "";
+        // The output of this action is the text from OpenAI trimmed and escaped
         core.setOutput("text", text.trim().replace(/(\r\n|\n|\r|'|"|`|)/gm, ""));
     }
     catch (error) {
