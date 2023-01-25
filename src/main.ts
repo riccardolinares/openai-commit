@@ -23,7 +23,7 @@ export async function run(): Promise<void> {
     });
     const text = response.data.choices[0].text ?? "";
 
-    core.debug(`openai-response: ${text}`);
+    // core.debug(`openai-response: ${text}`);
 
     // The output of this action is the body of the tweet
     core.setOutput("text", text);
