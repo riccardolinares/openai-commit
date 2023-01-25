@@ -1,4 +1,4 @@
-name: "OpenAI prompt"
+name: "OpenAI Prompt"
 description: "Uses OpenAI to generate a prompt response"
 author: riccardolinares
 branding:

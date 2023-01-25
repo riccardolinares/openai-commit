@@ -1,5 +1,5 @@
 {
-  "name": "OpenAI prompt",
+  "name": "OpenAI Prompt",
   "version": "0.0.1",
   "private": true,
   "description": "Uses OpenAI to generate a prompt response",
