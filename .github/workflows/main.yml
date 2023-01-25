@@ -19,14 +19,14 @@ jobs:
         with:
           node-version: 14
 
-      - name: Check for trigger keyword
-        run: |
-          if grep -q "#twito" "$GITHUB_EVENT_PATH"; then
-            echo "Tweet trigger found in commit message."
-          else
-            echo "Tweet trigger not found in commit message. Exiting."
-            exit 78
-          fi
+      # - name: Check for trigger keyword
+      #   run: |
+      #     if grep -q "#twito" "$GITHUB_EVENT_PATH"; then
+      #       echo "Tweet trigger found in commit message."
+      #     else
+      #       echo "Tweet trigger not found in commit message. Exiting."
+      #       exit 78
+      #     fi
 
       - name: OpenAI Prompt
         uses: riccardolinares/openai-commit-tweet@main
