@@ -2,7 +2,7 @@ import { Configuration, OpenAIApi } from "openai";
 import * as core from "@actions/core";
 import { parseCommit } from "./commits";
 
-export async function run(): Promise<any> {
+export async function run(): Promise<void> {
   try {
     const apiKey = core.getInput("openai-api-key");
     const configuration = new Configuration({
@@ -21,17 +21,16 @@ export async function run(): Promise<any> {
       frequency_penalty: 0,
       presence_penalty: 0,
     });
-    const body = response.data.choices[0].text ?? "";
+    const text = response.data.choices[0].text ?? "";
 
-	core.debug(`openai-response: ${body}`);
+    core.debug(`openai-response: ${text}`);
 
-    return {"openai": body};
-
+    // The output of this action is the body of the tweet
+    core.setOutput("text", text);
   } catch (error) {
     if (error instanceof Error) {
       core.setFailed(error.message);
     }
-    return {"error": error};
   }
 }
 

@@ -33,8 +33,8 @@ jobs:
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
           openai-prompt: "Write a funny and explanatory tweet about this git commit: ${{ github.event.head_commit.message }}"
-        id: openai_response
+        id: openai
 
       - name: Print results
         run: |
-          echo  ${{ steps.openai_response.outputs.openai}}
+          echo  ${{ steps.openai.outputs.text}}

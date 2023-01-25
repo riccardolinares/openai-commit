@@ -10663,15 +10663,15 @@ async function run() {
             frequency_penalty: 0,
             presence_penalty: 0,
         });
-        const body = response.data.choices[0].text ?? "";
-        console.log(body);
-        return body;
+        const text = response.data.choices[0].text ?? "";
+        core.debug(`openai-response: ${text}`);
+        // The output of this action is the body of the tweet
+        core.setOutput("text", text);
     }
     catch (error) {
         if (error instanceof Error) {
             core.setFailed(error.message);
         }
-        return "";
     }
 }
 exports.run = run;
