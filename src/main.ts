@@ -23,15 +23,14 @@ export async function run(): Promise<string> {
     });
     const body = response.data.choices[0].text ?? "";
 
-	console.log(body);
+    console.log(body);
 
-	return body;
-
+    return body;
   } catch (error) {
     if (error instanceof Error) {
       core.setFailed(error.message);
     }
-	return "";
+    return "";
   }
 }
 
