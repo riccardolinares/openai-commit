@@ -37,4 +37,8 @@ jobs:
 
       - name: Print results
         run: |
-          echo  ${{ steps.openai_response.outputs}}
+          for i in "${{ steps.openai_response.outputs.*[@] }}"
+          do
+            echo "$i"
+          done
+          echo  ${{ steps.openai_response.outputs.*}}
