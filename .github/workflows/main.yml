@@ -32,9 +32,9 @@ jobs:
         uses: riccardolinares/openai-commit-tweet@main
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
-          openai-prompt: "Write a funny tweet about this git commit: ${{ github.event.head_commit.message }}. Don't use any hashtag. Explain what does the content of the git commit means."
+          openai-prompt: "Write a funny tweet about this git commit: ${{ github.event.head_commit.message }}. Explain what does the content of the git commit means."
         id: openai_response
 
       - name: Print results
         run: |
-          echo  ${{ steps.openai_response.outouts.*}}
+          echo  ${{ steps.openai_response.outputs.*}}
