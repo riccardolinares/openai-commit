@@ -37,13 +37,4 @@ jobs:
 
       - name: Print results
         run: |
-          my_array=${{ steps.openai_response.outputs.*}}
-          # Get the length of the array
-          length=${#my_array[@]}
-
-          # Iterate over the indexes of the array
-          for ((i=0; i<$length; i++))
-          do
-              echo "${my_array[$i]}"
-          done
-          echo  ${{ steps.openai_response.outputs.*}}
+          echo  ${{ steps.openai_response.outputs.openai}}
