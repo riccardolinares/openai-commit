@@ -29,7 +29,7 @@ export async function run(): Promise<void> {
     // core.debug(`openai-response: ${text}`);
 
     const text =
-      "This is a test \n\r in case of special char ' \" qualcosa ' succederà ééé % \\ ";
+      "This is a test \n\r in case of special char '  qualcosa ' succederà ééé % \\ ";
 
     // core.debug(
     //   `text: ${text
@@ -41,15 +41,7 @@ export async function run(): Promise<void> {
     // );
 
     // The output of this action is the body of the tweet
-    core.setOutput(
-      "text",
-      text
-        .trim()
-        .replace(/(\r\n|\n|\r)/gm, "")
-        .replace(/'/g, "\\'")
-        .replace(/"/g, '\\"')
-        .replace(/`/g, "\\`")
-    );
+    core.setOutput("text", text.trim().replace(/(\r\n|\n|\r|'|"|`|)/gm, ""));
   } catch (error) {
     if (error instanceof Error) {
       core.setFailed(error.message);
