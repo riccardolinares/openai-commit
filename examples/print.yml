@@ -25,7 +25,7 @@ jobs:
             echo "Tweet trigger found in commit message."
           else
             echo "Tweet trigger not found in commit message. Exiting."
-            exit 78
+            exit 0
           fi
 
       - name: OpenAI Prompt
