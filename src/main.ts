@@ -2,7 +2,7 @@ import { Configuration, OpenAIApi } from "openai";
 import * as core from "@actions/core";
 import { parseCommit } from "./commits";
 
-export async function run(): Promise<void> {
+export async function run(): Promise<string> {
   try {
     const apiKey = core.getInput("openai-api-key");
     const configuration = new Configuration({
@@ -23,12 +23,15 @@ export async function run(): Promise<void> {
     });
     const body = response.data.choices[0].text ?? "";
 
+	console.log(body);
+
 	return body;
 
   } catch (error) {
     if (error instanceof Error) {
       core.setFailed(error.message);
     }
+	return "";
   }
 }
 
