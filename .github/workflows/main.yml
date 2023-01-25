@@ -1,0 +1,40 @@
+name: Tweet on Push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  tweet:
+    runs-on: ubuntu-latest
+    environment: Production
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+      - name: Check for trigger keyword
+        run: |
+          if grep -q "#twito" "$GITHUB_EVENT_PATH"; then
+            echo "Tweet trigger found in commit message."
+          else
+            echo "Tweet trigger not found in commit message. Exiting."
+            exit 78
+          fi
+
+      - name: OpenAI Prompt
+        uses: riccardolinares/openai-commit-tweet@v0.0.1
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          openai-prompt: ${{ github.event.comment.body }}
+        id: openai_response
+
+      - name: Print results
+        run: |
+        echo  ${{ steps.openai_response.outouts.*}}
