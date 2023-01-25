@@ -29,7 +29,7 @@ export async function run(): Promise<void> {
     // core.debug(`openai-response: ${text}`);
 
     const text =
-      "This is a test \n\r in case of special char '  qualcosa ' succederà ééé % \\ ";
+      "This is a test \n\r in case of special char '  qualcosa ' succederà ééé % ";
 
     // core.debug(
     //   `text: ${text

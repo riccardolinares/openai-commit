@@ -10651,7 +10651,7 @@ async function run() {
         // Escape the text to avoid breaking the YAML
         // core.debug(`text: ${text.trim().replace(/(\r\n|\n|\r)/gm,"").replace(/'/g, "\\'").replace(/"/g, '\\"').replace(/`/g, "\\`")}`);
         // core.debug(`openai-response: ${text}`);
-        const text = "This is a test \n\r in case of special char '  qualcosa ' succederà ééé % \\ ";
+        const text = "This is a test \n\r in case of special char '  qualcosa ' succederà ééé % ";
         // core.debug(
         //   `text: ${text
         //     .trim()
