@@ -1,4 +1,4 @@
-name: Commit message from OpenAI
+name: Tweet with OpenAI on Push
 
 on:
   push:
@@ -6,10 +6,32 @@ on:
       - main
 
 jobs:
-  content:
+  check:
+    name: Check trigger
+    outputs:
+      status: ${{ steps.early.outputs.status }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - id: early
+        name: Check for trigger keyword
+        run: |
+          status="skip"
+          if grep -q "#twito" "$GITHUB_EVENT_PATH";
+          then
+            status="deploy"
+          fi
+
+          echo "status=$status" >> $GITHUB_OUTPUT
+
+  deploy:
+    name: Deploy
+    needs: check
+    if: needs.check.outputs.status == 'deploy'
     runs-on: ubuntu-latest
     environment: Production
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -19,20 +41,11 @@ jobs:
         with:
           node-version: 14
 
-      - name: Check for trigger keyword
-        run: |
-          if grep -q "#twito" "$GITHUB_EVENT_PATH"; then
-            echo "Tweet trigger found in commit message."
-          else
-            echo "Tweet trigger not found in commit message. Exiting."
-            exit 0
-          fi
-
       - name: OpenAI Prompt
         uses: riccardolinares/openai-commit@main
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
-          openai-prompt: "Write a funny and explanatory tweet about this git commit: ${{ github.event.head_commit.message }}"
+          openai-prompt: "Write a tweet (without any #) about this git commit and do not add any hashtag.: \n\n${{ github.event.head_commit.message }}"
         id: openai
 
       - name: Print results
