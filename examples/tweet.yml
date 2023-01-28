@@ -6,10 +6,32 @@ on:
       - main
 
 jobs:
-  content:
+  check:
+    name: Check trigger
+    outputs:
+      status: ${{ steps.early.outputs.status }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - id: early
+        name: Check for trigger keyword
+        run: |
+          status="skip"
+          if grep -q "#twito" "$GITHUB_EVENT_PATH";
+          then
+            status="deploy"
+          fi
+
+          echo "status=$status" >> $GITHUB_OUTPUT
+
+  deploy:
+    name: Deploy
+    needs: check
+    if: needs.check.outputs.status == 'deploy'
     runs-on: ubuntu-latest
     environment: Production
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -19,26 +41,17 @@ jobs:
         with:
           node-version: 14
 
-      - name: Check for trigger keyword
-        run: |
-          if grep -q "#twito" "$GITHUB_EVENT_PATH"; then
-            echo "Tweet trigger found in commit message."
-          else
-            echo "Tweet trigger not found in commit message. Exiting."
-            exit 0
-          fi
-
       - name: OpenAI Prompt
         uses: riccardolinares/openai-commit@main
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
-          openai-prompt: "Write a funny and explanatory tweet about this git commit: ${{ github.event.head_commit.message }}"
+          openai-prompt: "Write a funny tweet (without any #) about this git commit: \n\n${{ github.event.head_commit.message }}"
         id: openai
 
       - name: Tweet
         uses: ethomson/send-tweet-action@v1
         with:
-          status: "Trying to use OpenAI with Github. Result: ${{ steps.openai.outputs.text}}"
+          status: "${{ steps.openai.outputs.text}}"
           consumer-key: ${{ secrets.TWITTER_CONSUMER_KEY }}
           consumer-secret: ${{ secrets.TWITTER_CONSUMER_SECRET }}
           access-token: ${{ secrets.TWITTER_ACCESS_TOKEN }}
