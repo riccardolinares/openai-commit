@@ -1,6 +1,5 @@
 import { Configuration, OpenAIApi } from "openai";
 import * as core from "@actions/core";
-import { parseCommit } from "./commits";
 
 export async function run(): Promise<void> {
   try {
@@ -14,7 +13,7 @@ export async function run(): Promise<void> {
 
     const response = await openai.createCompletion({
       model: core.getInput("model"),
-      prompt: parseCommit(core.getInput("openai-prompt")),
+      prompt: core.getInput("openai-prompt"),
       temperature: 0.7,
       max_tokens: 256,
       top_p: 1,

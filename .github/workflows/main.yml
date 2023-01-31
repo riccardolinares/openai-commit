@@ -41,7 +41,7 @@ jobs:
         with:
           node-version: 14
 
-      - name: OpenAI Prompt
+      - name: OpenAI Commit
         uses: riccardolinares/openai-commit@main
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
