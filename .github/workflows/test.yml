@@ -1,4 +1,4 @@
-name: Tweet with OpenAI on Push
+name: Test output of OpenAI on Push
 
 on:
   push:
@@ -46,11 +46,6 @@ jobs:
           openai-prompt: "Write a description for this git commit: \n${{ github.event.head_commit.message }}"
         id: openai
 
-      - name: Tweet
-        uses: ethomson/send-tweet-action@v1
-        with:
-          status: "${{ steps.openai.outputs.text}}"
-          consumer-key: ${{ secrets.TWITTER_CONSUMER_KEY }}
-          consumer-secret: ${{ secrets.TWITTER_CONSUMER_SECRET }}
-          access-token: ${{ secrets.TWITTER_ACCESS_TOKEN }}
-          access-token-secret: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+      - name: Print results
+        run: |
+          echo  "${{ steps.openai.outputs.text}}"
