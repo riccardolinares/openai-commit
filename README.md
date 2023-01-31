@@ -1,4 +1,4 @@
-# OpenAI Commit Github Action
+# OpenAI Commit Github Action v0.0.1
 This Github Action allows you to easily integrate OpenAI API into your workflow. With just a few steps, you can use OpenAI's language model to generate responses for your project.
 
 ## Usage
