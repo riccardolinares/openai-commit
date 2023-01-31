@@ -19,7 +19,7 @@ jobs:
         name: Check for trigger keyword
         run: |
           status="skip"
-          if grep -q "#twito" "$GITHUB_EVENT_PATH";
+          if grep -q "#openai" "$GITHUB_EVENT_PATH";
           then
             status="deploy"
           fi
