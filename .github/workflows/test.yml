@@ -5,47 +5,23 @@ on:
     branches:
       - main
 jobs:
-  check:
-    name: Check trigger
-    outputs:
-      status: ${{ steps.early.outputs.status }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - id: early
-        name: Check for trigger keyword
-        run: |
-          status="skip"
-          if grep -q "#openai" "$GITHUB_EVENT_PATH";
-          then
-            status="deploy"
-          fi
-
-          echo "status=$status" >> $GITHUB_OUTPUT
   deploy:
     name: Deploy
-    needs: check
-    if: needs.check.outputs.status == 'deploy'
     runs-on: ubuntu-latest
     environment: Production
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
       - name: Set up Node.js
         uses: actions/setup-node@v1
         with:
           node-version: 14
-
       - name: OpenAI
         uses: riccardolinares/openai-commit@v0.0.1
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
           openai-prompt: "Write a description for this git commit: \n${{ github.event.head_commit.message }}"
         id: openai
-
-      - name: Print results
+      - name: Print
         run: |
           echo  "${{ steps.openai.outputs.text}}"
