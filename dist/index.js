@@ -10598,21 +10598,6 @@ exports["default"] = _default;
 
 /***/ }),
 
-/***/ 5713:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.parseCommit = void 0;
-function parseCommit(commit) {
-    return commit.trim().replace(/#twito/g, "");
-}
-exports.parseCommit = parseCommit;
-
-
-/***/ }),
-
 /***/ 399:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -10645,7 +10630,6 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.run = void 0;
 const openai_1 = __nccwpck_require__(9211);
 const core = __importStar(__nccwpck_require__(2186));
-const commits_1 = __nccwpck_require__(5713);
 async function run() {
     try {
         const apiKey = core.getInput("openai-api-key");
@@ -10656,7 +10640,7 @@ async function run() {
         core.debug(`openai-prompt: ${core.getInput("openai-prompt")}`);
         const response = await openai.createCompletion({
             model: core.getInput("model"),
-            prompt: (0, commits_1.parseCommit)(core.getInput("openai-prompt")),
+            prompt: core.getInput("openai-prompt"),
             temperature: 0.7,
             max_tokens: 256,
             top_p: 1,

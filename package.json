@@ -1,8 +1,8 @@
 {
-  "name": "openai_prompt",
+  "name": "openai-commit",
   "version": "0.0.1",
   "private": true,
-  "description": "Uses OpenAI to generate a prompt response",
+  "description": "Uses OpenAI to generate a response",
   "author": "riccardolinares",
   "license": "MIT",
   "main": "dist/index.js",
