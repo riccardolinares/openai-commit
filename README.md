@@ -16,7 +16,6 @@ In your Github Actions workflow, add the following YAML code to utilize the acti
 
 ## Inputs
 The action requires the following inputs:
-
 - `openai-api-key`: Your OpenAI API key. This should be stored as a secret in your Github repository.
 - `openai-prompt`: The text prompt to be passed to the OpenAI API.
 - `model`: The ID of the OpenAI model to be used. (optional, default is text-davinci-003)
