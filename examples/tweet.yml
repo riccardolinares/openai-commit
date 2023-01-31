@@ -37,19 +37,19 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v0.0.1
         with:
           node-version: 14
 
       - name: OpenAI
-        uses: riccardolinares/openai-commit@main
+        uses: riccardolinares/openai-commit@v0.0.1
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
           openai-prompt: "Write a funny tweet (without any #) about this git commit: \n\n${{ github.event.head_commit.message }}"
         id: openai
 
       - name: Tweet
-        uses: ethomson/send-tweet-action@v1
+        uses: ethomson/send-tweet-action@v0.0.1
         with:
           status: "${{ steps.openai.outputs.text}}"
           consumer-key: ${{ secrets.TWITTER_CONSUMER_KEY }}

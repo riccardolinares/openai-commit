@@ -6,7 +6,7 @@ In your Github Actions workflow, add the following YAML code to utilize the acti
 
 ```
 - name: OpenAI
-  uses: riccardolinares/openai-commit@main
+  uses: riccardolinares/openai-commit@v0.0.1
   with:
     openai-api-key: ${{ secrets.OPENAI_API_KEY }}
     openai-prompt: <your-prompt>
@@ -49,7 +49,7 @@ jobs:
         with:
           node-version: 14
       - name: OpenAI
-        uses: riccardolinares/openai-commit@main
+        uses: riccardolinares/openai-commit@v0.0.1
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
           openai-prompt: "Write a description for this git commit: \n${{ github.event.head_commit.message }}"
